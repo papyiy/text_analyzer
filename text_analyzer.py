@@ -48,11 +48,11 @@ user = input('Please enter your username: ')
 pw = input('Please enter your password: ')
 
 #3 - Check username + password
-if user not in LOGGINS.keys():
+if user not in LOGGINS.keys():  #check user
     print('INCORRECT USERNAME. TERMINATING')
     exit()
 
-if LOGGINS.get(user) != pw:
+if LOGGINS.get(user) != pw: #check user+pw
     print('INCORRECT PASSWORD. TERMINATING')
     exit()
 else:
@@ -63,7 +63,55 @@ else:
 texts_index = list(range(1, len(TEXTS) + 1))
 text_choice = int(input(f'Please choose text index out of {texts_index}: '))
 
-if text_choice not in texts_index:
+if text_choice not in texts_index:  #check valid text choice
     print('INCORRECT CHOICE. TERMINATING')
     exit()
 
+#5 - Text statistics
+text_split =  TEXTS[text_choice - 1].split()
+
+n_of_words = len(text_split)
+
+n_of_titlecase = 0
+n_of_uppercase = 0
+n_of_lowercase = 0
+n_of_numbers = 0
+sum_of_numbers = 0  #for task 7
+for word in text_split:
+    if word.istitle():
+        n_of_titlecase += 1
+    elif word.isupper():
+        n_of_uppercase += 1
+    elif word.islower():
+        n_of_lowercase += 1
+    elif word.isdigit():
+        n_of_numbers += 1
+        sum_of_numbers += int(word) #for task 7
+
+print(SEPARATOR)
+print(f"There are {n_of_words} words.")
+print(f"There are {n_of_titlecase} titlecase words.")
+print(f"There are {n_of_uppercase} uppercase words.")
+print(f"There are {n_of_lowercase} lowercase words.")
+print(f"There are {n_of_numbers} numbers.")
+print(SEPARATOR)
+
+#6 Graphical interpretation
+graph_input = dict()
+char_to_replace = ".,!?"
+
+for word in text_split:
+    for char in char_to_replace:    #get rid of punctuation
+        word = word.replace(char,"")
+    if len(word) in graph_input.keys(): #adds to already created key
+        graph_input[len(word)] += 1
+    else:   #creates missing key
+        graph_input[len(word)] = 1
+
+for row in sorted(graph_input): #print graph
+    print(f"{row} {'*' * graph_input[row]} {graph_input[row]}")
+
+#7 Sum of numbers in text
+print(SEPARATOR)
+print(f'If we summed all the numbers in text we would get: {sum_of_numbers}')
+print(SEPARATOR)
