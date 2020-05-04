@@ -98,15 +98,13 @@ print(SEPARATOR)
 
 #6 Graphical interpretation
 graph_input = dict()
-char_to_replace = ".,!?"
 
 for word in text_split:
-    for char in char_to_replace:    #get rid of punctuation
-        word = word.replace(char,"")
-    if len(word) in graph_input.keys(): #adds to already created key
-        graph_input[len(word)] += 1
+    clean_word = word.strip(".,!?")
+    if len(clean_word) in graph_input.keys(): #adds to already created key
+        graph_input[len(clean_word)] += 1
     else:   #creates missing key
-        graph_input[len(word)] = 1
+        graph_input[len(clean_word)] = 1
 
 for row in sorted(graph_input): #print graph
     print(f"{row} {'*' * graph_input[row]} {graph_input[row]}")
